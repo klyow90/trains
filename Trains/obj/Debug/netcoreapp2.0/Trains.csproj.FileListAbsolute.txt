@@ -1,0 +1,11 @@
+D:\workspace\ThoughtWorks\Trains\Trains\bin\Debug\netcoreapp2.0\Trains.deps.json
+D:\workspace\ThoughtWorks\Trains\Trains\bin\Debug\netcoreapp2.0\Trains.runtimeconfig.json
+D:\workspace\ThoughtWorks\Trains\Trains\bin\Debug\netcoreapp2.0\Trains.runtimeconfig.dev.json
+D:\workspace\ThoughtWorks\Trains\Trains\bin\Debug\netcoreapp2.0\Trains.dll
+D:\workspace\ThoughtWorks\Trains\Trains\bin\Debug\netcoreapp2.0\Trains.pdb
+D:\workspace\ThoughtWorks\Trains\Trains\obj\Debug\netcoreapp2.0\Trains.csproj.CoreCompileInputs.cache
+D:\workspace\ThoughtWorks\Trains\Trains\obj\Debug\netcoreapp2.0\Trains.AssemblyInfoInputs.cache
+D:\workspace\ThoughtWorks\Trains\Trains\obj\Debug\netcoreapp2.0\Trains.AssemblyInfo.cs
+D:\workspace\ThoughtWorks\Trains\Trains\obj\Debug\netcoreapp2.0\Trains.dll
+D:\workspace\ThoughtWorks\Trains\Trains\obj\Debug\netcoreapp2.0\Trains.pdb
+D:\workspace\ThoughtWorks\Trains\Trains\obj\Debug\netcoreapp2.0\Trains.csprojResolveAssemblyReference.cache
