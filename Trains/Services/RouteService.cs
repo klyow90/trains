@@ -5,16 +5,16 @@ using Trains.Entities;
 
 namespace Trains.Services
 {
-    public class RouteDistanceService
+    public class RouteService
     {
         private readonly List<Edge> _Edges;
 
-        public RouteDistanceService(List<Edge> edges)
+        public RouteService(List<Edge> edges)
         {
             _Edges = edges;
         }
 
-        public int GetRouteCost(string route)
+        public int GetDistance(string route)
         {
             var routeArray = route.Split("-");
             var cost = 0;
