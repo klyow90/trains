@@ -22,6 +22,7 @@ namespace Trains.Services
         public int ShortestRouteCost(List<LinkedList<Edge>> routes)
         {
             var shortest = int.MaxValue;
+            
             foreach (var route in routes)
             {
                 var totalCost = route.Sum(x => x.Cost);
@@ -41,7 +42,13 @@ namespace Trains.Services
 
             if((from == to && index != 0) && ((isExactMax && index == max) || !isExactMax))
             {
-                routes.Add(route);
+                var r = new LinkedList<Edge>();
+
+                foreach (var edge in route)
+                {
+                    r.AddLast(edge);
+                }
+                routes.Add(r);
                 return routes;
             }
 
@@ -56,9 +63,9 @@ namespace Trains.Services
             {
                 route.AddLast(adj);
                 routes = GetRoutes(adj.To, to, index, max, isExactMax, routes, route);
-                route = new LinkedList<Edge>();
+                route.RemoveLast();
+                //route = new LinkedList<Edge>();
             }
-
             return routes;
         }
 

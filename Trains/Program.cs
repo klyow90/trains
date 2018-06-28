@@ -22,7 +22,7 @@ namespace Trains
             var routeDistanceService = new RouteDistanceService(edges);
             //Console.WriteLine(routeDistanceService.GetRouteCost("A-E-B-C-D"));
             var service = new PossibleRouteService(edges);
-            var routes = service.GetRoutes('B', 'B', 10, false);
+            var routes = service.GetRoutes('B', 'B', 5, false);
             var shortest = service.ShortestRouteCost(routes);
 
             foreach (var item in routes)
