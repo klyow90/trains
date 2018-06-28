@@ -16,8 +16,7 @@ namespace Trains
             var reader = new FileReader(path);
             var data = reader.ReadAllText();
 
-            var edgeService = new EdgeService(data);
-            var edges = edgeService.GetEdges();
+            var edges = StringGraph.ToEdgeList(data);
 
             Console.WriteLine("Input");
             Console.WriteLine("1. The distance of the route A-B-C");

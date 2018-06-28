@@ -1,20 +1,19 @@
 using NUnit.Framework;
 using System.Collections.Generic;
 using Trains.Entities;
-using Trains.Services;
+using Trains.Helpers;
 
-namespace Trains.Tests.Services
+namespace Trains.Tests.Helpers
 {
     [TestFixture]
-    public class EdgeServiceTest
+    public class StringGraphTest
     {
         private readonly string _Graph = "AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7";
 
         [Test]
-        public void GetEdges()
+        public void ToEdgeList()
         {
-            var service = new EdgeService(_Graph);
-            var edges = service.GetEdges();
+            var edges = StringGraph.ToEdgeList(_Graph);
             var expected = new List<Edge>()
             {
                 new Edge('A', 'B', 5),

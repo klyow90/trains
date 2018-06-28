@@ -2,20 +2,13 @@ using System;
 using System.Collections.Generic;
 using Trains.Entities;
 
-namespace Trains.Services
+namespace Trains.Helpers
 {
-    public class EdgeService
+    public class StringGraph
     {
-        private readonly string _Graph;
-        
-        public EdgeService(string graph)
+        public static List<Edge> ToEdgeList(string graph)
         {
-            _Graph = graph;
-        }
-
-        public List<Edge> GetEdges()
-        {
-            var edges = _Graph.Split(",");
+            var edges = graph.Split(",");
             var tmp = new List<Edge>();
 
             foreach(var e in edges)
