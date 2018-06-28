@@ -16,7 +16,7 @@ namespace Trains.Services
 
         public List<LinkedList<Edge>> GetRoutes(char from, char to, int max, bool isExactMax)
         {
-            return GetRoutes(from, to, 0, max, isExactMax, new List<LinkedList<Edge>>(), new LinkedList<Edge>());
+            return GetRoutes(from, to, 0, max, isExactMax, -1, new List<LinkedList<Edge>>(), new LinkedList<Edge>());
         }
 
         public int ShortestRouteCost(List<LinkedList<Edge>> routes)
@@ -36,11 +36,12 @@ namespace Trains.Services
             return shortest;
         }
 
-        private List<LinkedList<Edge>> GetRoutes(char from, char to, int index, int max, bool isExactMax, List<LinkedList<Edge>> routes, LinkedList<Edge> route)
+        private List<LinkedList<Edge>> GetRoutes(char from, char to, int depthIndex, int maxDepth, bool isExactMax, int maxDistance,
+            List<LinkedList<Edge>> routes, LinkedList<Edge> route)
         {
             var adjacents = _Adjacents[from];
 
-            if((from == to && index != 0) && ((isExactMax && index == max) || !isExactMax))
+            if((from == to && depthIndex != 0) && ((isExactMax && depthIndex == maxDepth) || !isExactMax))
             {
                 var r = new LinkedList<Edge>();
 
@@ -52,19 +53,18 @@ namespace Trains.Services
                 return routes;
             }
 
-            if(index >= max)
+            if(depthIndex >= maxDepth)
             {
                 return routes;
             }
 
-            index++;
+            depthIndex++;
 
             foreach (var adj in adjacents)
             {
                 route.AddLast(adj);
-                routes = GetRoutes(adj.To, to, index, max, isExactMax, routes, route);
+                routes = GetRoutes(adj.To, to, depthIndex, maxDepth, isExactMax, maxDistance, routes, route);
                 route.RemoveLast();
-                //route = new LinkedList<Edge>();
             }
             return routes;
         }
