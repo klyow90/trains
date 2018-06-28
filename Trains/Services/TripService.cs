@@ -11,7 +11,7 @@ namespace Trains.Services
 
         public TripService(List<Edge> edges)
         {
-            InitAdjacents(edges);    
+            InitAdjacents(edges);
         }
 
         public List<LinkedList<Edge>> GetRoutes(char from, char to, int maxDepth, bool isExactMax)
@@ -29,12 +29,12 @@ namespace Trains.Services
             var routes = GetRoutes(from, to, 0, 10, false, -1, new List<LinkedList<Edge>>(), new LinkedList<Edge>());
 
             var shortest = int.MaxValue;
-            
+
             foreach (var route in routes)
             {
                 var totalCost = route.Sum(x => x.Cost);
 
-                if(totalCost < shortest)
+                if (totalCost < shortest)
                 {
                     shortest = totalCost;
                 }
@@ -48,28 +48,18 @@ namespace Trains.Services
         {
             var adjacents = _Adjacents[from];
 
-            if((from == to && depthIndex != 0) && ((isExactMax && depthIndex == maxDepth) || !isExactMax))
+            if ((HasReachedDestination(from, to) && !IsFirstLoop(depthIndex)) && ((isExactMax && HasReachMaxDepthThreshold(depthIndex, maxDepth)) || !isExactMax))
             {
-                var tmpRoute = new LinkedList<Edge>();
-
-                foreach (var edge in route)
-                {
-                    tmpRoute.AddLast(edge);
-                }
-                routes.Add(tmpRoute);
-
-                //return routes;
+                routes.Add(Clone(route));
             }
 
-            if(depthIndex >= maxDepth)
+            if (HasReachMaxDepthThreshold(depthIndex, maxDepth))
             {
                 return routes;
             }
 
-            var currentDistance = route.Sum(x => x.Cost);
-
-            if(ApplyMaxDistanceRule(maxDistance) 
-                && HitMaxDistanceThreshold(currentDistance, maxDistance))
+            if (ApplyMaxDistanceRule(maxDistance) &&
+                HitMaxDistanceThreshold(route, maxDistance))
             {
                 return routes;
             }
@@ -88,23 +78,50 @@ namespace Trains.Services
         {
             foreach (var edge in edges)
             {
-                if(!_Adjacents.ContainsKey(edge.From))
+                if (!_Adjacents.ContainsKey(edge.From))
                 {
                     _Adjacents[edge.From] = new List<Edge>();
                 }
-                
+
                 _Adjacents[edge.From].Add(edge);
             }
         }
 
+        private bool IsFirstLoop(int depthIndex)
+        {
+            return depthIndex == 0;
+        }
+
+        private bool HasReachedDestination(char from, char to)
+        {
+            return from == to;
+        }
+
+        private bool HasReachMaxDepthThreshold(int depthIndex, int maxDepth)
+        {
+            return depthIndex >= maxDepth;
+        }
+
+        private LinkedList<Edge> Clone(LinkedList<Edge> route)
+        {
+            var tmpRoute = new LinkedList<Edge>();
+
+            foreach (var edge in route)
+            {
+                tmpRoute.AddLast(edge);
+            }
+
+            return tmpRoute;
+        }
         private bool ApplyMaxDistanceRule(int maxDistance)
         {
             return maxDistance > 0;
         }
 
-        private bool HitMaxDistanceThreshold(int currentDistance, int maxDistance)
+        private bool HitMaxDistanceThreshold(LinkedList<Edge> route, int maxDistance)
         {
-            return currentDistance >= maxDistance;
+            var totalDistance = route.Sum(x => x.Cost);
+            return totalDistance >= maxDistance;
         }
     }
 }
