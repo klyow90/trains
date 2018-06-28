@@ -46,11 +46,16 @@ namespace Trains.Services
         private List<LinkedList<Edge>> GetRoutes(char from, char to, int depthIndex, int maxDepth, bool isExactMax, int maxDistance,
             List<LinkedList<Edge>> routes, LinkedList<Edge> route)
         {
-            var adjacents = _Adjacents[from];
-
-            if ((HasReachedDestination(from, to) && !IsFirstLoop(depthIndex)) && ((isExactMax && HasReachMaxDepthThreshold(depthIndex, maxDepth)) || !isExactMax))
+            if ((HasReachedDestination(from, to) && !IsFirstLoop(depthIndex)) &&
+                ((isExactMax && HasReachMaxDepthThreshold(depthIndex, maxDepth)) || !isExactMax))
             {
-                routes.Add(Clone(route));
+                if (IsApplyMaxDistanceRule(maxDistance) && HitMaxDistanceThreshold(route, maxDistance))
+                {
+                    return routes;
+                }
+
+                var clone = Clone(route);
+                routes.Add(clone);
             }
 
             if (HasReachMaxDepthThreshold(depthIndex, maxDepth))
@@ -58,13 +63,15 @@ namespace Trains.Services
                 return routes;
             }
 
-            if (ApplyMaxDistanceRule(maxDistance) &&
+            if (IsApplyMaxDistanceRule(maxDistance) &&
                 HitMaxDistanceThreshold(route, maxDistance))
             {
                 return routes;
             }
 
             depthIndex++;
+
+            var adjacents = _Adjacents[from];
 
             foreach (var adj in adjacents)
             {
@@ -113,7 +120,7 @@ namespace Trains.Services
 
             return tmpRoute;
         }
-        private bool ApplyMaxDistanceRule(int maxDistance)
+        private bool IsApplyMaxDistanceRule(int maxDistance)
         {
             return maxDistance > 0;
         }
